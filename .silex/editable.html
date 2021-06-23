@@ -14,7 +14,88 @@
     <link rel="stylesheet" href="https://design.stastic.net/static/2.11/front-end.css" data-silex-static="">
 
     <style type="text/css" class="silex-style">.style-cta-button p {border-radius: 100px;}.style-gradient-cta p {border-radius: 100px; background-image: radial-gradient(#5fb497 35%, #007faf 75%);}.style-silex-element-content prevent-draggable.gradient {background-image: radial-gradient(#5fb497 35%, #007faf 75%);}</style>
-    <script type="text/javascript" class="silex-script"></script>
+    <script type="text/javascript" class="silex-script">/*
+ * animation widget from here: https://github.com/silexlabs/Silex/issues/443
+ */
+$(function() {
+	var OFFSET = $('.hero-section, [data-prevent-scale-y]').height() * (1 - silex.scale) / 2 // this is because of the hero section which is not resizeable
+	var win = $(window)
+	var size = {
+		h: win.height()
+		// , w: win.width()
+	}
+	var initial = {
+		h: size.h / silex.scale
+		// , w: size.w / silex.scale
+	}
+	var offset = {
+		h: initial.h - size.h + OFFSET
+		// , w: initial.w - size.w
+	}
+	// this function is used to apply an offset to the detection of the active boundaries of the viewport
+	// this is required when the viewport width is smaller than the website (when Silex scales down the website)
+	function getOffset(el) {
+		var position = $(el).position()
+		var localOffset = {
+			h: offset.h + (position.top * (1-silex.scale))
+			// , w: offset.w + (position.left * (1-silex.scale))
+		}
+		return {
+			top: offset.h
+			, bottom: -offset.h
+			// , left: offset.w
+			// , right: -offset.w
+		}
+	}
+	function getDelay(el) {
+		var $el = $(el);
+		if($el.hasClass('delay100')) return 100;
+		if($el.hasClass('delay200')) return 200;
+		if($el.hasClass('delay300')) return 300;
+		if($el.hasClass('delay400')) return 400;
+		if($el.hasClass('delay500')) return 500;
+		if($el.hasClass('delay600')) return 600;
+		if($el.hasClass('delay700')) return 700;
+		if($el.hasClass('delay800')) return 800;
+		if($el.hasClass('delay900')) return 900;
+		if($el.hasClass('delay1000')) return 1000;
+		return 0;
+	}
+	function getDistance(el) {
+		var $el = $(el);
+		if($el.hasClass('distance0')) return '0px';
+		if($el.hasClass('distance100')) return '100px';
+		if($el.hasClass('distance200')) return '200px';
+		if($el.hasClass('distance500')) return '500px';
+		if($el.hasClass('distance1000')) return '1000px';
+		return '100px';
+	}
+	function getScale(el) {
+		var $el = $(el);
+		if($el.hasClass('scale3_4')) return 3/4;
+		if($el.hasClass('scale2_3')) return 2/3;
+		if($el.hasClass('scale1_2')) return 1/2;
+		if($el.hasClass('scale1_3')) return 1/3;
+		if($el.hasClass('scale1_4')) return 1/4;
+		return 1;
+	}
+	var sr = ScrollReveal({
+		distance: '100px'
+		, reset: false
+	});
+	$('.from-left').each(function() {
+		sr.reveal(this, { origin:  'left', scale: getScale(this), delay: getDelay(this), distance: getDistance(this), viewOffset: getOffset(this)});
+	})
+	$('.from-right').each(function() {
+		sr.reveal(this, { origin:  'right', scale: getScale(this), delay: getDelay(this), distance: getDistance(this), viewOffset: getOffset(this)});
+	})
+	$('.from-top').each(function() {
+		sr.reveal(this, { origin:  'top', scale: getScale(this), delay: getDelay(this), distance: getDistance(this), viewOffset: getOffset(this)});
+	})
+	$('.from-bottom').each(function() {
+		sr.reveal(this, { origin:  'bottom', scale: getScale(this), delay: getDelay(this), distance: getDistance(this), viewOffset: getOffset(this)});
+	})
+})</script>
     <style class="silex-inline-styles" type="text/css">.body-initial {background-color: rgba(255,255,255,1); position: static;}.silex-id-1478366444112-1 {background-color: transparent; position: static; margin-top: -1px;}.silex-id-1478366444112-0 {background-color: transparent; min-height: 100px; position: relative; margin-left: auto; margin-right: auto; display: flex;}.silex-id-1474394621033-3 {position: static; margin-top: -1px; background-image: url(../assets/hero2.jpg); background-repeat: no-repeat; background-size: cover; background-position: center right;}.silex-id-1474394621032-2 {background-color: transparent; min-height: 10px; position: relative; margin-left: auto; margin-right: auto; display: flex; align-items: center; flex-direction: column;}.silex-id-1478366450713-3 {background-color: transparent; position: static; margin-top: -1px;}.silex-id-1478366450713-2 {background-color: transparent; min-height: 550px; position: relative; margin-left: auto; margin-right: auto; display: flex; flex-wrap: wrap; align-items: start; justify-content: start;}.silex-id-1623753065693-0 {position: static; background-color: rgba(0,127,175,1);}.silex-id-1623753065694-1 {min-height: 676px; background-color: transparent; position: relative; margin-left: auto; margin-right: auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: start;}.silex-id-1623753081274-2 {position: static;}.silex-id-1623753081276-3 {min-height: 10px; background-color: rgba(255,255,255,1); position: relative; margin-left: auto; margin-right: auto; display: flex; flex-wrap: wrap; margin-bottom: 29px; padding-bottom: 8px;}.silex-id-1623753085891-4 {position: static;}.silex-id-1623753085893-5 {min-height: 200px; background-color: rgb(255, 255, 255); position: relative; margin-left: auto; margin-right: auto;}.silex-id-1623756048634-0 {width: 90px; min-height: 40px; background-color: transparent; position: static; top: 0px; left: 133px; background-image: url(../assets/logo.svg); background-repeat: no-repeat; margin-left: 75px; margin-top: 35px;}.silex-id-1623762581134-2 {width: 1030px; min-height: 160px; position: static; margin-top: 30px;}.silex-id-1623763274303-3 {width: 230px; min-height: 28px; position: static; background-color: transparent; padding-bottom: 237px;}.silex-id-1623774543267-7 {width: 995px; min-height: 10px; position: static; margin-left: 100px; margin-top: 100px;}.silex-id-1623778540450-11 {width: 1250px; min-height: 335px; background-color: transparent; position: static; display: flex; flex-wrap: wrap; align-items: start; flex-direction: row; margin-bottom: 60px;}.silex-id-1623830224921-1 {width: 230px; min-height: 28px; position: static; top: 467px; left: 533px; margin-left: 525px; margin-top: 27px; padding-bottom: 90px;}.silex-id-1623830414019-2 {width: 700px; min-height: 71px; position: static; margin-left: 330px; margin-top: 50px; margin-bottom: 50px;}.silex-id-1623833293569-4 {position: static; background-color: rgba(0,127,175,1);}.silex-id-1623833293572-5 {min-height: 200px; background-color: rgba(0,127,175,1); position: relative; margin-left: auto; margin-right: auto; display: flex; flex-wrap: wrap; justify-content: center; align-items: center;}.silex-id-1623833449996-6 {width: 1182px; min-height: 10px; background-color: transparent; position: static; top: 464px; left: 34px; display: flex; flex-wrap: wrap; justify-content: center; flex-direction: row; margin-bottom: 60px;}.silex-id-1623833637588-7 {width: 110px; height: 65px; position: static; margin-left: 25px; margin-top: 29px; margin-right: 25px;}.silex-id-1623833727337-8 {width: 122px; height: 35px; position: static; margin-left: 25px; margin-top: 44px; margin-right: 25px;}.silex-id-1623833794052-9 {width: 95px; height: 40px; position: static; margin-top: 40px; margin-left: 25px; margin-right: 25px;}.silex-id-1623833941932-10 {width: 80px; height: 100px; position: static; margin-left: 25px; margin-right: 25px;}.silex-id-1623833985113-11 {width: 75px; height: 75px; position: static; top: 52px; left: 639px; margin-top: 20px; margin-left: 25px; margin-right: 25px;}.silex-id-1623834058718-12 {width: 103px; height: 45px; position: static; top: 52px; left: 768px; margin-top: 40px; margin-left: 25px; margin-right: 25px;}.silex-id-1623834100272-13 {width: 80px; height: 80px; position: static; margin-top: 20px; margin-left: 25px; margin-right: 25px;}.silex-id-1623836135136-14 {width: 1185px; min-height: 10px; position: static; background-color: transparent; margin-left: 50px;}.silex-id-1623836567768-15 {width: 230px; min-height: 10px; position: static; top: 690px; left: 483px; margin-left: 503px; margin-bottom: 75px;}.silex-id-1623927138261-3 {width: 330px; min-height: 10px; background-color: transparent; position: static; top: 232px; left: 371px; display: flex; align-items: start; flex-wrap: wrap; flex-direction: row; margin-top: 20px; margin-right: 40px; margin-left: 40px; margin-bottom: 25px;}.silex-id-1623927138261-4 {width: 75px; min-height: 71px; background-color: transparent; position: static; top: 21px; left: 140px; background-image: url(../assets/check@2x.png); background-repeat: no-repeat; background-size: contain; background-position: center center; margin-left: 123px;}.silex-id-1623927138262-5 {width: 322px; min-height: 180px; position: static; margin-top: 20px;}.silex-id-1623928158335-9 {width: 321px; min-height: 271px; background-color: transparent; position: static; display: flex; align-items: start; flex-wrap: wrap; flex-direction: row; margin-top: 20px; margin-right: 70px; margin-left: 75px; margin-bottom: 25px;}.silex-id-1623928158335-10 {width: 75px; min-height: 71px; background-color: transparent; position: static; top: 21px; left: 140px; background-image: url(../assets/computer@2x.png); background-repeat: no-repeat; background-size: contain; background-position: center center; margin-left: 123px;}.silex-id-1623928158335-11 {width: 321px; min-height: 160px; position: static; margin-top: 20px;}.silex-id-1623928165530-12 {width: 321px; min-height: 10px; background-color: transparent; position: static; top: 369px; left: 482px; display: flex; align-items: start; flex-wrap: wrap; flex-direction: row; margin-top: 20px; margin-right: 30px; margin-left: 50px; margin-bottom: 25px;}.silex-id-1623928165530-13 {width: 75px; min-height: 71px; background-color: transparent; position: static; top: 21px; left: 140px; background-image: url(../assets/rocket@2x.png); background-repeat: no-repeat; background-size: contain; background-position: center center; margin-left: 123px;}.silex-id-1623928165530-14 {width: 321px; min-height: 180px; position: static; margin-top: 20px;}.silex-id-1624274530192-0 {width: 825px; min-height: 10px; position: static; margin-left: 45px; margin-top: 71px;}.silex-id-1624349312152-0 {width: 357px; height: 330px; position: static; top: 38px; left: 803px; border-radius: 500px 500px 500px 500px;}@media only screen and (max-width: 480px) {.silex-id-1623753065694-1 {min-height: 10px;}.silex-id-1623756048634-0 {width: 118px;}.silex-id-1623762581134-2 {min-height: 10px; top: 0px; left: 0px; width: 462px;}.silex-id-1623763274303-3 {padding-bottom: 213px; width: 194px;}.silex-id-1623774543267-7 {margin-bottom: 100px; margin-left: 82px; width: 440px; min-height: 411px; top: -1px; left: 0px;}.silex-id-1623778540450-11 {min-height: 10px; top: 0px; left: 0px; width: 462px; margin-bottom: 0px;}.silex-id-1623830224921-1 {width: 194px; min-height: 68px; top: -1px; left: 0px;}.silex-id-1623830414019-2 {min-height: 10px;}.silex-id-1623833293572-5 {min-height: 10px;}.silex-id-1623833449996-6 {margin-top: 50px; margin-bottom: 35px; width: 425px;}.silex-id-1623833637588-7 {margin-left: 40px; margin-right: 45px; padding-right: 15px; width: 105px; height: 60px;}.silex-id-1623833727337-8 {margin-left: 40px; margin-right: 40px; padding-right: 14px; width: 117px; height: 30px; padding-left: 5px;}.silex-id-1623833794052-9 {margin-right: 100px; width: 90px; height: 35px; top: -111px; left: -55.75px; padding-right: 5px;}.silex-id-1623833941932-10 {margin-top: 30px; width: 75px; height: 95px;}.silex-id-1623833985113-11 {margin-top: 25px; width: 70px; height: 70px;}.silex-id-1623834058718-12 {margin-top: 25px; width: 100px; height: 40px;}.silex-id-1623834100272-13 {margin-top: 25px; width: 70px; height: 70px;}.silex-id-1623836135136-14 {min-height: 67px; top: 2px; left: 0px; width: 462px; margin-top: 25px;}.silex-id-1623836567768-15 {margin-bottom: 100px; width: 194px; min-height: 72px; top: 0px; left: 0px;}.silex-id-1623927138261-3 {flex-direction: column; align-items: center; justify-content: start; width: 425px;}.silex-id-1623927138261-4 {width: 40px; min-height: 40px;}.silex-id-1623927138262-5 {width: 400px; min-height: 10px; top: 0px; left: 1px;}.silex-id-1623928158335-9 {width: 425px;}.silex-id-1623928158335-10 {width: 40px; min-height: 40px; margin-left: 123px; margin-right: 123px;}.silex-id-1623928158335-11 {min-height: 10px; width: 400px;}.silex-id-1623928165530-12 {width: 425px;}.silex-id-1623928165530-13 {width: 40px; min-height: 40px; top: 0px; left: 0px;}.silex-id-1623928165530-14 {min-height: 10px; width: 400px;}.silex-id-1624274530192-0 {width: 280px; margin-top: 5px; min-height: 154px; top: -1px; left: 1px;}.silex-id-1624349312152-0 {height: 150px; width: 150px;}}</style>
     <title></title>
     
